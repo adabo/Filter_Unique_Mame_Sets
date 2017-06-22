@@ -21,7 +21,9 @@ loop,% gameListLines.MaxIndex()
 	}
 	else
 	{
-		toClipboard .= ix " " referenceLine "`n"
+		regexMatch(gameListLines[lineCnt], "^.*?,(\w*)", machineName)
+		;toClipboard .= ix " " referenceLine "`n"
+		toClipboard .= ix " " machineName1 "`n"
 		referenceWords := currentWords
 		referenceLine := gameListLines[lineCnt]
 		++ix
