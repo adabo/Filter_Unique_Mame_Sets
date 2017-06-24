@@ -1,12 +1,3 @@
-;gameList =
-;(
-;Kung-Fu Master,kungfum,Irem,1984,Fighter / 2D,good,null,0.023,horizontal,raster,2,2,,,,null,,no,no,,
-;Kung-Fu Master (bootleg set 1),kungfub,bootleg,1984,Fighter / 2D,good,kungfum,0.024,horizontal,raster,2,2,,,,null,,no,no,,
-;Kung-Fu Master (bootleg set 2),kungfub2,bootleg,1984,Fighter / 2D,good,kungfum,.034b07,horizontal,raster,2,2,,,,null,,no,no,,
-;Kung-Fu II,kungfuii,Irem,1984,Fighter / 2D,good,null,0.023,horizontal,raster,2,2,,,,null,,no,no,,
-;Lady Bug,ladybug,Universal,1981,Maze,good,null,0.001,horizontal,raster,2,2,,,,null,,no,no,,
-;Lady Bug (bootleg),ladybugb,bootleg,1981,Maze,good,ladybug,.034b03,horizontal,raster,2,2,,,,null,,no,no,,
-;)
 while(!gameListFile)
 {
 	FileSelectFile, gameListFile, 3, %A_WorkingDir%\*.csv, Choose your CSV MAME collection list, Text documents (*.txt; *.csv)
@@ -57,7 +48,6 @@ while(lineCnt < gameListLines.MaxIndex())
 	{
 		regexMatch(gameListLines[lineCnt], "^.*?,(\w*)", machineName)
 		toClipboard .= machineName1 ".zip`n"
-		;toClipboard .= "`n" gameListLines[lineCnt]
 		referenceWords := currentWords
 		referenceLine := gameListLines[lineCnt]
 		++lineCnt
@@ -92,7 +82,6 @@ isSameSetFamily(R, C)
 	{
 		RFirstChar := subStr(R[i], 1, 1)
 		CFirstChar := subStr(C[i], 1, 1)
-		;msgbox,% "---while test`nFirst chars---`n" RFirstChar "`n" CFirstChar "`n---i and max---`ni: " i "`nRMax: " R.MaxIndex() "`nCMax" C.MaxIndex() 
 		if ( (RFirstChar == "(" || CFirstChar == "(") || (R[i] != C[i]))
 		{
 			return ((RFirstChar == "(" && CFirstChar == "(")
