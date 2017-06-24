@@ -7,15 +7,14 @@
 ;Lady Bug,ladybug,Universal,1981,Maze,good,null,0.001,horizontal,raster,2,2,,,,null,,no,no,,
 ;Lady Bug (bootleg),ladybugb,bootleg,1981,Maze,good,ladybug,.034b03,horizontal,raster,2,2,,,,null,,no,no,,
 ;)
-;FileRead, gameList, f:\Desktop\MAME Tools\MFM 0.8.500\Lists\EnglishOnly_v2.csv
-while(gameList == "")
+while(!gameListFile)
 {
-	FileSelectFile, gameList, 3, %A_WorkingDir%\*.csv, Choose your CSV MAME collection list, Text documents (*.txt; *.csv)
+	FileSelectFile, gameListFile, 3, %A_WorkingDir%\*.csv, Choose your CSV MAME collection list, Text documents (*.txt; *.csv)
 	if (ERRORLEVEL)
 	{
 		ExitApp
 	}
-	else if (gameList == "")
+	else if (gameListFile == "")
 	{
 		msgBox, 1, ROM Collection Filter,% "Please choose a list."
 		ifMsgBox OK
@@ -25,10 +24,10 @@ while(gameList == "")
 	}
 	else
 	{
-		msgBox, 3, ROM Collection Filter,% "Is this correct? """ gameList """"
+		msgBox, 3, ROM Collection Filter,% "Is this correct? """ gameListFile """"
 		ifMsgBox No
 		{
-			gameList := ""
+			gameListFile := ""
 			continue
 		}
 		ifMsgBox Yes
@@ -38,15 +37,15 @@ while(gameList == "")
 	}
 }
 
+FileRead, gameList,% gameListFile
+
 preferredHiLo := "low"
 preferredRegion := "US,World,Euro"
 lineCnt := 1
 gameListLines := strSplit(gameList, "`n")
-lo(gameListLines.MaxIndex(), "Maxindex")
 
 while(lineCnt < gameListLines.MaxIndex())
 {
-msgBox, done
 	currentWords := getGameTitleWords(gameListLines[lineCnt])
 
 	if (isSameSetFamily(referenceWords, currentWords))
@@ -56,7 +55,6 @@ msgBox, done
 	}
 	else
 	{
-		lo(referenceLine)
 		regexMatch(gameListLines[lineCnt], "^.*?,(\w*)", machineName)
 		toClipboard .= machineName1 ".zip`n"
 		;toClipboard .= "`n" gameListLines[lineCnt]
